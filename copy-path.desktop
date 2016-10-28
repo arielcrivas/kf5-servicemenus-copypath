@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/octet-stream;inode/directory
+Actions=CopyPathMenyEntry
+X-KDE-Priority=TopLevel
+
+[Desktop Action CopyPathMenyEntry]
+Name=Copiar ruta
+Icon=edit-copy
+Exec=/usr/bin/copy-path "%u"
+
