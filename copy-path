@@ -15,14 +15,14 @@
 ## Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ##
 
-TITLE="<b>Copiar ruta</b>"
+TITLE="<b>Copy path</b>"
 
 ME=${0##*/}
 
 showHelp() {
     cat >&2 <<EOF
-Uso: ${ME} RUTA
-Copia la ruta de ficheros y directorios a la cola de Klipper
+Usage: ${ME} PATH
+Put the path of a file or directory into the Klipper queue.
 EOF
     exit 0
 }
@@ -36,7 +36,7 @@ arg=${1,,}
 [[ $arg == -h || $arg == --help ]] && showHelp
 
 if [[ -z $KDE_FULL_SESSION ]]; then
-    notify-send -i "dialog-error" "$TITLE" "No hay una sesión con KDE como escritorio." -t 10000
+    notify-send -i "dialog-error" "$TITLE" "No KDE active session." -t 10000
     exit 64
 fi
 
@@ -52,18 +52,17 @@ if (( $(pgrep -c dolphin) )); then
             notify-send \
                 -i "dialog-error" \
                 "$TITLE" \
-                "No se pudo copiar el texto al portapapeles." \
+                "Unable to copy text to the clipboard." \
                 -t 10000
             ret=1
         fi
     else
-        notify-send -i "dialog-warning" "$TITLE" "Sin nada para copiar..." -t 10000
+        notify-send -i "dialog-warning" "$TITLE" "Nothing to copy..." -t 10000
         ret=2
     fi
 else
-    notify-send -i "dialog-error" "$TITLE" "Dolphin no está activo." -t 10000
+    notify-send -i "dialog-error" "$TITLE" "Dolphin is inactive." -t 10000
     ret=32
 fi
 
 exit $ret
-
