@@ -1,0 +1,24 @@
+pkgname=kf5_servicemenus_copypath
+_pkgname=${pkgname//_/-}
+pkgdesc="A service menu to put the path of a file or directory into the Klipper queue"
+pkgver=0.4
+pkgrel=1
+arch=('any')
+url="https://github.com/arielcrivas/kf5-servicemenus-copypath"
+license=('GPL')
+depends=('plasma-desktop' 'dolphin' 'bash' 'libnotify')
+depends+=('xclip') # or xsel
+#depends+=('xsel')
+conflicts=("${_pkgname}")
+provides=("${_pkgname}")
+source=("${_pkgname}::git+${url}.git")
+sha256sums=('SKIP')
+
+package() {
+    cd "${_pkgname}"
+
+    install -Dm 755 copy-path "$pkgdir"/usr/bin/copy-path
+    install -Dm 644 copy-path.desktop "${pkgdir}"/usr/share/kservices5/ServiceMenus/copy-path.desktop
+}
+
+# vim: ft=sh ts=4 et:

@@ -40,29 +40,25 @@ if [[ -z $KDE_FULL_SESSION ]]; then
     exit 64
 fi
 
-if (( $(pgrep -c dolphin) )); then
-    if (( $# )); then
-        arg=$(realpath -m -- "$1")
-        if isExecutable xclip; then
-            printf "$arg" | xclip -in -selection clipboard
-            ret=$?
-        elif isExecutable xsel; then
-            printf "$arg" | xsel --input --clipboard
-        else
-            notify-send \
-                -i "dialog-error" \
-                "$TITLE" \
-                "Unable to copy text to the clipboard." \
-                -t 10000
-            ret=1
-        fi
+if (( $# )); then
+    arg="$1"
+    if isExecutable xclip; then
+        printf "$arg" | xclip -in -selection clipboard
+        ret=$?
+    elif isExecutable xsel; then
+        printf "$arg" | xsel --input --clipboard
     else
-        notify-send -i "dialog-warning" "$TITLE" "Nothing to copy..." -t 10000
-        ret=2
+        notify-send \
+            -i "dialog-error" \
+            "$TITLE" \
+            "Unable to copy text to the clipboard." \
+            -t 10000
+        ret=1
     fi
 else
-    notify-send -i "dialog-error" "$TITLE" "Dolphin is inactive." -t 10000
-    ret=32
+    notify-send -i "dialog-warning" "$TITLE" "Nothing to copy..." -t 10000
+    ret=2
 fi
 
 exit $ret
+
