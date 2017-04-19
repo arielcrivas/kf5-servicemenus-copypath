@@ -7,5 +7,6 @@ X-KDE-Priority=TopLevel
 
 [Desktop Action CopyPathMenyEntry]
 Name=Copy path
+Name[es]=Copiar ruta
 Icon=edit-copy
 Exec=/usr/bin/copy-path "%u"
